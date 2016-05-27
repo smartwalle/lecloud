@@ -19,6 +19,10 @@ func (this GetVideoInfoParam) Params() map[string]string {
 	return m
 }
 
+func (this GetVideoInfoParam) Method() string {
+	return "POST"
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // GetVideoListParam 获取视频列表信息
 // http://help.lecloud.com/Wiki.jsp?page=VideoInfo
@@ -49,5 +53,9 @@ func (this GetVideoListParam) Params() map[string]string {
 	m["size"] = fmt.Sprintf("%d", this.Size)
 
 	return m
+}
+
+func (this GetVideoListParam) Method() string {
+	return "POST"
 }
 

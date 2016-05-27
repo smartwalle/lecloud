@@ -10,31 +10,53 @@ import (
 )
 
 const (
-	LE_CLOUD_OPEN_API_URL = "http://api.letvcloud.com/open.php"
+	LE_CLOUD_OPEN_API_URL      = "http://api.letvcloud.com/open.php"
+	LE_CLOUD_OPEN_API_LIVE_URL = "http://api.open.letvcloud.com/live/execute"
 )
 
 var (
+	userId     string
 	userUnique string
 	secretKey  string
 )
 
-func UpdateKey(userUnique, secretKey string) {
+func UpdateKey(userId, userUnique, secretKey string) {
+	userId     = userId
 	userUnique = userUnique
 	secretKey  = secretKey
 }
 
-func Request(param ILeCloudParam) (results map[string]interface{}, err error) {
-	results, err = RequestWithKey(secretKey, userUnique, param)
-	return results, err
+func VideoRequest(param ILeCloudParam) (result map[string]interface{}, err error) {
+	result, err = VideoRequestWithKey(secretKey, userUnique, param)
+	return result, err
 }
 
-func RequestWithKey(secretKey, userUnique string, param ILeCloudParam) (results map[string]interface{}, err error) {
+func LiveRequest(param ILeCloudParam) (result map[string]interface{}, err error) {
+	result, err = LiveRequestWithKey(secretKey, userId, param)
+	return result, err
+}
+
+func VideoRequestWithKey(secretKey, userUnique string, param ILeCloudParam) (result map[string]interface{}, err error) {
 	var p = make(map[string]string)
 	p["user_unique"] = userUnique
-	p["timestamp"]   = fmt.Sprintf("%d", time.Now().Unix())
-	p["format"]      = "json"
 	p["ver"]         = "2.0"
 	p["api"]         = param.APIName()
+	p["format"]      = "json"
+	result, err = requestWithKey(secretKey, userUnique, LE_CLOUD_OPEN_API_URL, p, param)
+	return result, err
+}
+
+func LiveRequestWithKey(secretKey, userId string, param ILeCloudParam) (result map[string]interface{}, err error) {
+	var p = make(map[string]string)
+	p["userid"] = userId
+	p["ver"] = "3.1"
+	p["method"] = param.APIName()
+	result, err = requestWithKey(secretKey, userId, LE_CLOUD_OPEN_API_LIVE_URL, p, param)
+	return result, err
+}
+
+func requestWithKey(secretKey, userUnique, domain string, p map[string]string, param ILeCloudParam) (result map[string]interface{}, err error) {
+	p["timestamp"]   = fmt.Sprintf("%d000", time.Now().Unix())
 
 	var ps = param.Params()
 	if ps != nil {
@@ -44,10 +66,11 @@ func RequestWithKey(secretKey, userUnique string, param ILeCloudParam) (results 
 	}
 
 	var c = http.NewClient()
-	c.SetMethod("POST")
-	c.SetURLString(LE_CLOUD_OPEN_API_URL)
+	c.SetMethod(param.Method())
+	c.SetURLString(domain)
+	c.SetHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
 
-	var keys = make([]string, len(p))
+	var keys []string
 	for key, value := range p {
 		c.SetParam(key, value)
 		keys = append(keys, key)
@@ -56,8 +79,8 @@ func RequestWithKey(secretKey, userUnique string, param ILeCloudParam) (results 
 
 	c.SetParam("sign", sign(secretKey, keys, p))
 
-	results, err = c.DoJsonRequest()
-	return results, err
+	result, err = c.DoJsonRequest()
+	return result, err
 }
 
 func sign(secretKey string, keys []string, param map[string]string) (s string) {

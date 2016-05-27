@@ -8,6 +8,7 @@ type ILeCloudParam interface {
 	// 返回参数列表
 	Params() map[string]string
 
+	Method() string
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -16,4 +17,8 @@ type LeCloudParam map[string]interface{}
 
 func (this LeCloudParam) APIName() string {
 	return ""
+}
+
+func (this LeCloudParam) Method() string {
+	return "POST"
 }
