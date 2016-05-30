@@ -24,10 +24,31 @@ func (this GetPushTokenParam) Method() string {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// GetActivityInfoSearchParam 直播活动信息查询接口
+// GetPushURLParam 直播活动推流地址获取接口
+// http://help.lecloud.com/Wiki.jsp?page=activity.getPushUrl
+type GetPushURLParam struct {
+	ActivityId  string // 是 直播活动ID
+}
+
+func (this GetPushURLParam) APIName() string {
+	return "lecloud.cloudlive.activity.getPushUrl"
+}
+
+func (this GetPushURLParam) Params() map[string]string {
+	var m = make(map[string]string)
+	m["activityId"] = this.ActivityId
+	return m
+}
+
+func (this GetPushURLParam) Method() string {
+	return "GET"
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// SearchActivityInfoParam 直播活动信息查询接口
 // http://help.lecloud.com/Wiki.jsp?page=activity.vrsinfo.search
 
-type GetActivityInfoSearchParam struct {
+type SearchActivityInfoParam struct {
 	ActivityId     string // 否 直播活动ID
 	ActivityName   string // 否 直播活动名称
 	ActivityStatus string // 否 直播活动状态。0：未开始 1：已开始 3：已结束
@@ -35,11 +56,11 @@ type GetActivityInfoSearchParam struct {
 	FetchSize      int    // 否 一次返回多少条数据，默认为10，最多不能超过100条
 }
 
-func (this GetActivityInfoSearchParam) APIName() string {
+func (this SearchActivityInfoParam) APIName() string {
 	return "lecloud.cloudlive.vrs.activity.vrsinfo.search"
 }
 
-func (this GetActivityInfoSearchParam) Params() map[string]string {
+func (this SearchActivityInfoParam) Params() map[string]string {
 	var m = make(map[string]string)
 
 	if len(this.ActivityId) > 0 {
@@ -66,7 +87,7 @@ func (this GetActivityInfoSearchParam) Params() map[string]string {
 	return m
 }
 
-func (this GetActivityInfoSearchParam) Method() string {
+func (this SearchActivityInfoParam) Method() string {
 	return "GET"
 }
 
@@ -138,4 +159,212 @@ func (this CreateActivityParam) Params() map[string]string {
 
 func (this CreateActivityParam) Method() string {
 	return "POST"
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// UpdateActivityVrsInfoParam 直播活动媒资信息修改接口
+// http://help.lecloud.com/Wiki.jsp?page=activity.vrsinfo.modify
+type ModifyActivityVrsInfoParam struct {
+	ActivityId       string  // 是 直播活动ID
+	ActivityName     string  // 否 直播活动名称(200个字符以内)
+	StartTime        string  // 否 开始时间 格式yyyyMMddHHmmss
+	EndTime          string  // 否 结束时间 格式yyyyMMddHHmmss
+	CoverImgUrl      string  // 否 活动封面地址，如果为空，则系统会默认一张图片
+	Description      string  // 否 活动描述（1024个字符以内）
+	ActivityCategory string  // 否 活动分类参见如下《活动编码》，无二级编码时直接填写一级编码，参见如下《扩展字段参数列表》
+	Extensions       string  // 扩展字段，活动分类修改时，需要修改分类的扩展字段，也可在活动分类不变的情况下单独修改扩展字段，按如下方式传参数： 参数名为要修改的扩展字段如： {"host":"主队名称","guest":"客队名称"}
+}
+
+func (this ModifyActivityVrsInfoParam) APIName() string {
+	return "lecloud.cloudlive.vrs.activity.vrsinfo.modify"
+}
+
+func (this ModifyActivityVrsInfoParam) Params() map[string]string {
+	var m = make(map[string]string)
+	m["activityId"] = this.ActivityId
+
+	if len(this.ActivityName) > 0 {
+		m["activityName"] = this.ActivityName
+	}
+
+	if len(this.StartTime) > 0 {
+		m["startTime"] = this.StartTime
+	}
+	if len(this.EndTime) > 0 {
+		m["endTime"] = this.EndTime
+	}
+	if len(this.CoverImgUrl) > 0 {
+		m["coverImgUrl"] = this.CoverImgUrl
+	}
+	if len(this.Description) > 0 {
+		m["description"] = this.Description
+	}
+	if len(this.ActivityCategory) > 0 {
+		m["activityCategory"] = this.ActivityCategory
+	}
+	if len(this.Extensions) > 0 {
+		m["extensions"] = this.Extensions
+	}
+	return m
+}
+
+func (this ModifyActivityVrsInfoParam) Method() string {
+	return "POST"
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// SearchActivityStreamInfo 直播活动流信息查询接口
+// http://help.lecloud.com/Wiki.jsp?page=streaminfo.search
+type SearchActivityStreamInfo struct {
+	ActivityId       string  // 是 直播活动ID
+}
+
+func (this SearchActivityStreamInfo) APIName() string {
+	return "lecloud.cloudlive.vrs.activity.streaminfo.search"
+}
+
+func (this SearchActivityStreamInfo) Params() map[string]string {
+	var m = make(map[string]string)
+	m["activityId"] = this.ActivityId
+	return m
+}
+
+func (this SearchActivityStreamInfo) Method() string {
+	return "GET"
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// StopActivityParam 直播活动结束接口
+// http://help.lecloud.com/Wiki.jsp?page=activity.stop
+type StopActivityParam struct {
+	ActivityId       string  // 是 直播活动ID
+}
+
+func (this StopActivityParam) APIName() string {
+	return "lecloud.cloudlive.activity.stop"
+}
+
+func (this StopActivityParam) Params() map[string]string {
+	var m = make(map[string]string)
+	m["activityId"] = this.ActivityId
+	return m
+}
+
+func (this StopActivityParam) Method() string {
+	return "POST"
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// GetActivityMachineStateParam 直播活动机位状态查询接口
+// http://help.lecloud.com/Wiki.jsp?page=getActivityMachineState
+type GetActivityMachineStateParam struct {
+	ActivityId       string  // 是 直播活动ID
+}
+
+func (this GetActivityMachineStateParam) APIName() string {
+	return "letv.cloudlive.activity.getActivityMachineState"
+}
+
+func (this GetActivityMachineStateParam) Params() map[string]string {
+	var m = make(map[string]string)
+	m["activityId"] = this.ActivityId
+	return m
+}
+
+func (this GetActivityMachineStateParam) Method() string {
+	return "GET"
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ModifyActivityCoverImgParam 直播活动封面上传接口
+// http://help.lecloud.com/Wiki.jsp?page=modifyCoverImgnew
+type ModifyActivityCoverImgParam struct {
+	ActivityId       string  // 是 直播活动ID
+	File             string  // 是 要上传的封面图片
+}
+
+func (this ModifyActivityCoverImgParam) APIName() string {
+	return "lecloud.cloudlive.activity.modifyCoverImg"
+}
+
+func (this ModifyActivityCoverImgParam) Params() map[string]string {
+	var m = make(map[string]string)
+	m["activityId"] = this.ActivityId
+	return m
+}
+
+func (this ModifyActivityCoverImgParam) Method() string {
+	return "POST"
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// GetActivityPlayerPageURLParam 直播活动播放页地址获取
+// http://help.lecloud.com/Wiki.jsp?page=playerpage.getUrl
+type GetActivityPlayerPageURLParam struct {
+	ActivityId       string  // 是 直播活动ID
+}
+
+func (this GetActivityPlayerPageURLParam) APIName() string {
+	return "lecloud.cloudlive.activity.playerpage.getUrl"
+}
+
+func (this GetActivityPlayerPageURLParam) Params() map[string]string {
+	var m = make(map[string]string)
+	m["activityId"] = this.ActivityId
+	return m
+}
+
+func (this GetActivityPlayerPageURLParam) Method() string {
+	return "POST"
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// CreateRecTaskParam 直播创建打点录制任务接口
+// http://help.lecloud.com/Wiki.jsp?page=createRecTasknew
+type CreateRecTaskParam struct {
+	LiveId    string  // 是 直播ID，直播id查询参考《活动流信息查询接口》文档
+	StartTime string  // 是 开始时间 格式yyyyMMddHHmmss
+	EndTime   string  // 是 结束时间 格式yyyyMMddHHmmss
+}
+
+func (this CreateRecTaskParam) APIName() string {
+	return "lecloud.cloudlive.rec.createRecTask"
+}
+
+func (this CreateRecTaskParam) Params() map[string]string {
+	var m = make(map[string]string)
+	m["liveId"] = this.LiveId
+	m["startTime"] = this.StartTime
+	m["endTime"] = this.EndTime
+	return m
+}
+
+func (this CreateRecTaskParam) Method() string {
+	return "POST"
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// SearchRecResult 直播打点录制结果查询接口
+// http://help.lecloud.com/Wiki.jsp?page=SearchResultnew
+type SearchRecResult struct {
+	LiveId    string  // 否 直播ID，直播id查询参考《活动流信息查询接口》文档
+	TaskId    string  // 否 任务id
+	Offset    int     // 否 开始行数
+	Size      int     // 否 每页记录数
+	StartTime string  // 否 开始时间 格式yyyyMMdd
+	EndTime   string  // 否 结束时间 格式yyyyMMdd
+}
+
+func (this SearchRecResult) APIName() string {
+	return "lecloud.cloudlive.rec.searchResult"
+}
+
+func (this SearchRecResult) Params() map[string]string {
+	var m = make(map[string]string)
+	m["liveId"] = this.LiveId
+	return m
+}
+
+func (this SearchRecResult) Method() string {
+	return "GET"
 }
