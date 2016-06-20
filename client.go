@@ -1,12 +1,12 @@
 package lecloud
 
 import (
-	"fmt"
-	"sort"
-	"time"
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
 	"github.com/smartwalle/going/http"
+	"sort"
+	"time"
 )
 
 const (
@@ -15,33 +15,33 @@ const (
 )
 
 var (
-	userId     string
-	userUnique string
-	secretKey  string
+	UserId     string
+	UserUnique string
+	SecretKey  string
 )
 
 func UpdateKey(userId, userUnique, secretKey string) {
-	userId     = userId
+	userId = userId
 	userUnique = userUnique
-	secretKey  = secretKey
+	secretKey = secretKey
 }
 
 func VideoRequest(param ILeCloudParam) (result map[string]interface{}, err error) {
-	result, err = VideoRequestWithKey(secretKey, userUnique, param)
+	result, err = VideoRequestWithKey(SecretKey, UserUnique, param)
 	return result, err
 }
 
 func LiveRequest(param ILeCloudParam) (result map[string]interface{}, err error) {
-	result, err = LiveRequestWithKey(secretKey, userId, param)
+	result, err = LiveRequestWithKey(SecretKey, UserId, param)
 	return result, err
 }
 
 func VideoRequestWithKey(secretKey, userUnique string, param ILeCloudParam) (result map[string]interface{}, err error) {
 	var p = make(map[string]string)
 	p["user_unique"] = userUnique
-	p["ver"]         = "2.0"
-	p["api"]         = param.APIName()
-	p["format"]      = "json"
+	p["ver"] = "2.0"
+	p["api"] = param.APIName()
+	p["format"] = "json"
 	result, err = requestWithKey(secretKey, userUnique, LE_CLOUD_OPEN_API_URL, p, param)
 	return result, err
 }
@@ -56,7 +56,7 @@ func LiveRequestWithKey(secretKey, userId string, param ILeCloudParam) (result m
 }
 
 func requestWithKey(secretKey, userUnique, domain string, p map[string]string, param ILeCloudParam) (result map[string]interface{}, err error) {
-	p["timestamp"]   = fmt.Sprintf("%d000", time.Now().Unix())
+	p["timestamp"] = fmt.Sprintf("%d000", time.Now().Unix())
 
 	var ps = param.Params()
 	if ps != nil {

@@ -20,8 +20,8 @@ package lecloud
 //func TestCreateActivityParam(t *testing.T) {
 //	var param = CreateActivityParam{}
 //	param.ActivityName = "直播第一天"
-//	param.StartTime = "20160527120000"
-//	param.EndTime = "20160527130000"
+//	param.StartTime = "20160620150000"
+//	param.EndTime = "20160621130000"
 //	param.CodeRateTypes = "10,13"
 //	param.ActivityCategory = "999"
 //
