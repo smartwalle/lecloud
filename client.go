@@ -21,9 +21,9 @@ var (
 )
 
 func UpdateKey(userId, userUnique, secretKey string) {
-	userId = userId
-	userUnique = userUnique
-	secretKey = secretKey
+	UserId = userId
+	UserUnique = userUnique
+	SecretKey = secretKey
 }
 
 func VideoRequest(param ILeCloudParam) (result map[string]interface{}, err error) {
