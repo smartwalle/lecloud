@@ -6,7 +6,7 @@ import "fmt"
 // GetPushTokenParam 直播活动推流Token获取接口
 // http://help.lecloud.com/Wiki.jsp?page=activity.getPushToken
 type GetPushTokenParam struct {
-	ActivityId  string // 是 直播活动ID
+	ActivityId string // 是 直播活动ID
 }
 
 func (this GetPushTokenParam) APIName() string {
@@ -27,7 +27,7 @@ func (this GetPushTokenParam) Method() string {
 // GetPushURLParam 直播活动推流地址获取接口
 // http://help.lecloud.com/Wiki.jsp?page=activity.getPushUrl
 type GetPushURLParam struct {
-	ActivityId  string // 是 直播活动ID
+	ActivityId string // 是 直播活动ID
 }
 
 func (this GetPushURLParam) APIName() string {
@@ -79,7 +79,7 @@ func (this SearchActivityInfoParam) Params() map[string]string {
 		m["offset"] = fmt.Sprintf("%d", this.OffSet)
 	}
 
-	if this.FetchSize <=0 {
+	if this.FetchSize <= 0 {
 		this.FetchSize = 10
 	}
 	m["fetchSize"] = fmt.Sprintf("%d", this.FetchSize)
@@ -115,18 +115,18 @@ func (this SearchActivityInfoParam) Method() string {
 //999 其他
 
 type CreateActivityParam struct {
-	ActivityName     string  // 是 直播活动名称(200个字符以内)
-	StartTime        string  // 是 开始时间 格式yyyyMMddHHmmss
-	EndTime          string  // 是 结束时间 格式yyyyMMddHHmmss
-	CoverImgUrl      string  // 否 活动封面地址，如果为空，则系统会默认一张图片
-	Description      string  // 否 活动描述（1024个字符以内）
-	LiveNum          int     // 是 机位数量，范围为：1,2,3,4. 默认为1
-	CodeRateTypes    string  // 是 流的码率类型，逗号分隔。由大到小排列。取值范围：10 流畅；13 标清；16 高清；19 超清；22 720P；25 1080P；99 原画
-	NeedRecord       int     // 是 是否支持全程录制 0：否 1：是。默认为0
-	NeedTimeShift    int     // 是 是否支持时移 0：否 1：是。默认为0
-	NeedFullView     int     // 是 是否全景观看 0：否 1：是。默认为0
-	ActivityCategory string  // 是 活动分类，参见《活动编码》
-	PlayMode         int     // 是 播放模式，0：实时直播。1：流畅直播
+	ActivityName     string // 是 直播活动名称(200个字符以内)
+	StartTime        string // 是 开始时间 格式yyyyMMddHHmmss
+	EndTime          string // 是 结束时间 格式yyyyMMddHHmmss
+	CoverImgUrl      string // 否 活动封面地址，如果为空，则系统会默认一张图片
+	Description      string // 否 活动描述（1024个字符以内）
+	LiveNum          int    // 是 机位数量，范围为：1,2,3,4. 默认为1
+	CodeRateTypes    string // 是 流的码率类型，逗号分隔。由大到小排列。取值范围：10 流畅；13 标清；16 高清；19 超清；22 720P；25 1080P；99 原画
+	NeedRecord       int    // 是 是否支持全程录制 0：否 1：是。默认为0
+	NeedTimeShift    int    // 是 是否支持时移 0：否 1：是。默认为0
+	NeedFullView     int    // 是 是否全景观看 0：否 1：是。默认为0
+	ActivityCategory string // 是 活动分类，参见《活动编码》
+	PlayMode         int    // 是 播放模式，0：实时直播。1：流畅直播
 }
 
 func (this CreateActivityParam) APIName() string {
@@ -136,24 +136,24 @@ func (this CreateActivityParam) APIName() string {
 func (this CreateActivityParam) Params() map[string]string {
 	var m = make(map[string]string)
 	m["activityName"] = this.ActivityName
-	m["startTime"]    = this.StartTime
-	m["endTime"]      = this.EndTime
+	m["startTime"] = this.StartTime
+	m["endTime"] = this.EndTime
 	if len(this.CoverImgUrl) > 0 {
-		m["coverImgUrl"]  = this.CoverImgUrl
+		m["coverImgUrl"] = this.CoverImgUrl
 	}
 	if len(this.Description) > 0 {
-		m["description"]  = this.Description
+		m["description"] = this.Description
 	}
 	if this.LiveNum < 1 || this.LiveNum > 4 {
 		this.LiveNum = 1
 	}
-	m["liveNum"]       = fmt.Sprintf("%d", this.LiveNum)
+	m["liveNum"] = fmt.Sprintf("%d", this.LiveNum)
 	m["codeRateTypes"] = this.CodeRateTypes
-	m["needRecord"]    = fmt.Sprintf("%d", this.NeedRecord)
+	m["needRecord"] = fmt.Sprintf("%d", this.NeedRecord)
 	m["needTimeShift"] = fmt.Sprintf("%d", this.NeedTimeShift)
-	m["needFullView"]  = fmt.Sprintf("%d", this.NeedFullView)
+	m["needFullView"] = fmt.Sprintf("%d", this.NeedFullView)
 	m["activityCategory"] = this.ActivityCategory
-	m["playMode"]         = fmt.Sprintf("%d", this.PlayMode)
+	m["playMode"] = fmt.Sprintf("%d", this.PlayMode)
 	return m
 }
 
@@ -165,14 +165,14 @@ func (this CreateActivityParam) Method() string {
 // UpdateActivityVrsInfoParam 直播活动媒资信息修改接口
 // http://help.lecloud.com/Wiki.jsp?page=activity.vrsinfo.modify
 type ModifyActivityVrsInfoParam struct {
-	ActivityId       string  // 是 直播活动ID
-	ActivityName     string  // 否 直播活动名称(200个字符以内)
-	StartTime        string  // 否 开始时间 格式yyyyMMddHHmmss
-	EndTime          string  // 否 结束时间 格式yyyyMMddHHmmss
-	CoverImgUrl      string  // 否 活动封面地址，如果为空，则系统会默认一张图片
-	Description      string  // 否 活动描述（1024个字符以内）
-	ActivityCategory string  // 否 活动分类参见如下《活动编码》，无二级编码时直接填写一级编码，参见如下《扩展字段参数列表》
-	Extensions       string  // 扩展字段，活动分类修改时，需要修改分类的扩展字段，也可在活动分类不变的情况下单独修改扩展字段，按如下方式传参数： 参数名为要修改的扩展字段如： {"host":"主队名称","guest":"客队名称"}
+	ActivityId       string // 是 直播活动ID
+	ActivityName     string // 否 直播活动名称(200个字符以内)
+	StartTime        string // 否 开始时间 格式yyyyMMddHHmmss
+	EndTime          string // 否 结束时间 格式yyyyMMddHHmmss
+	CoverImgUrl      string // 否 活动封面地址，如果为空，则系统会默认一张图片
+	Description      string // 否 活动描述（1024个字符以内）
+	ActivityCategory string // 否 活动分类参见如下《活动编码》，无二级编码时直接填写一级编码，参见如下《扩展字段参数列表》
+	Extensions       string // 扩展字段，活动分类修改时，需要修改分类的扩展字段，也可在活动分类不变的情况下单独修改扩展字段，按如下方式传参数： 参数名为要修改的扩展字段如： {"host":"主队名称","guest":"客队名称"}
 }
 
 func (this ModifyActivityVrsInfoParam) APIName() string {
@@ -216,7 +216,7 @@ func (this ModifyActivityVrsInfoParam) Method() string {
 // SearchActivityStreamInfo 直播活动流信息查询接口
 // http://help.lecloud.com/Wiki.jsp?page=streaminfo.search
 type SearchActivityStreamInfo struct {
-	ActivityId       string  // 是 直播活动ID
+	ActivityId string // 是 直播活动ID
 }
 
 func (this SearchActivityStreamInfo) APIName() string {
@@ -237,7 +237,7 @@ func (this SearchActivityStreamInfo) Method() string {
 // StopActivityParam 直播活动结束接口
 // http://help.lecloud.com/Wiki.jsp?page=activity.stop
 type StopActivityParam struct {
-	ActivityId       string  // 是 直播活动ID
+	ActivityId string // 是 直播活动ID
 }
 
 func (this StopActivityParam) APIName() string {
@@ -258,7 +258,7 @@ func (this StopActivityParam) Method() string {
 // GetActivityMachineStateParam 直播活动机位状态查询接口
 // http://help.lecloud.com/Wiki.jsp?page=getActivityMachineState
 type GetActivityMachineStateParam struct {
-	ActivityId       string  // 是 直播活动ID
+	ActivityId string // 是 直播活动ID
 }
 
 func (this GetActivityMachineStateParam) APIName() string {
@@ -279,8 +279,8 @@ func (this GetActivityMachineStateParam) Method() string {
 // ModifyActivityCoverImgParam 直播活动封面上传接口
 // http://help.lecloud.com/Wiki.jsp?page=modifyCoverImgnew
 type ModifyActivityCoverImgParam struct {
-	ActivityId       string  // 是 直播活动ID
-	File             string  // 是 要上传的封面图片
+	ActivityId string // 是 直播活动ID
+	File       string // 是 要上传的封面图片
 }
 
 func (this ModifyActivityCoverImgParam) APIName() string {
@@ -301,7 +301,7 @@ func (this ModifyActivityCoverImgParam) Method() string {
 // GetActivityPlayerPageURLParam 直播活动播放页地址获取
 // http://help.lecloud.com/Wiki.jsp?page=playerpage.getUrl
 type GetActivityPlayerPageURLParam struct {
-	ActivityId       string  // 是 直播活动ID
+	ActivityId string // 是 直播活动ID
 }
 
 func (this GetActivityPlayerPageURLParam) APIName() string {
@@ -322,9 +322,9 @@ func (this GetActivityPlayerPageURLParam) Method() string {
 // CreateRecTaskParam 直播创建打点录制任务接口
 // http://help.lecloud.com/Wiki.jsp?page=createRecTasknew
 type CreateRecTaskParam struct {
-	LiveId    string  // 是 直播ID，直播id查询参考《活动流信息查询接口》文档
-	StartTime string  // 是 开始时间 格式yyyyMMddHHmmss
-	EndTime   string  // 是 结束时间 格式yyyyMMddHHmmss
+	LiveId    string // 是 直播ID，直播id查询参考《活动流信息查询接口》文档
+	StartTime string // 是 开始时间 格式yyyyMMddHHmmss
+	EndTime   string // 是 结束时间 格式yyyyMMddHHmmss
 }
 
 func (this CreateRecTaskParam) APIName() string {
@@ -347,12 +347,12 @@ func (this CreateRecTaskParam) Method() string {
 // SearchRecResult 直播打点录制结果查询接口
 // http://help.lecloud.com/Wiki.jsp?page=SearchResultnew
 type SearchRecResult struct {
-	LiveId    string  // 否 直播ID，直播id查询参考《活动流信息查询接口》文档
-	TaskId    string  // 否 任务id
-	Offset    int     // 否 开始行数
-	Size      int     // 否 每页记录数
-	StartTime string  // 否 开始时间 格式yyyyMMdd
-	EndTime   string  // 否 结束时间 格式yyyyMMdd
+	LiveId    string // 否 直播ID，直播id查询参考《活动流信息查询接口》文档
+	TaskId    string // 否 任务id
+	Offset    int    // 否 开始行数
+	Size      int    // 否 每页记录数
+	StartTime string // 否 开始时间 格式yyyyMMdd
+	EndTime   string // 否 结束时间 格式yyyyMMdd
 }
 
 func (this SearchRecResult) APIName() string {
@@ -367,4 +367,48 @@ func (this SearchRecResult) Params() map[string]string {
 
 func (this SearchRecResult) Method() string {
 	return "GET"
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// SecurityConfig 直播活动安全信息设置接口
+// http://www.lecloud.com/zh-cn/help/2016/07/27/121.html?LeftMenu=api_zb_trans
+type SecurityConfig struct {
+	ActivityId                string // 是 直播活动ID
+	NeededPushAuth            int    // 是 是否启用推流鉴权: 0、否;1、是
+	PushUrlValidTime          int    // 否 推流地址有效时长,单位s,启用推流鉴权时有效
+	LiveKey                   string // 否 直播安全码,计算推流地址时用到的安全码,如果为空的话,则使用客户的安全码
+	NeedIpWhiteList           int    // 是 是否启用IP推流白名单: 0、否;1、是
+	PushIpWhiteList           string // 否 推流IP白名单。多个IP时,用英文半角逗号分隔,IP最多配置10个。
+	NeedPlayerDomainWhiteList int    // 是 是否启用域名白名单: 0、否;1、是
+	PlayerDomainWhiteList     string // 否 域名白名单。多个域名时,用英文半角逗号分隔,最多配置10个。
+}
+
+func (this SecurityConfig) APIName() string {
+	return "lecloud.cloudlive.activity.sercurity.config"
+}
+
+func (this SecurityConfig) Params() map[string]string {
+	var m = make(map[string]string)
+	m["activityId"] = this.ActivityId
+	m["neededPushAuth"] = fmt.Sprintf("%d", this.NeededPushAuth)
+	if this.NeededPushAuth == 1 {
+		m["pushUrlValidTime"] = fmt.Sprintf("%d", this.PushUrlValidTime)
+	}
+	if this.LiveKey != "" {
+		m["liveKey"] = this.LiveKey
+	}
+	m["needIpWhiteList"] = fmt.Sprintf("%d", this.NeedIpWhiteList)
+	if this.NeedIpWhiteList == 1 {
+		m["pushIpWhiteList"] = this.PushIpWhiteList
+	}
+	m["needPlayerDomainWhiteList"] = fmt.Sprintf("%d", this.NeedPlayerDomainWhiteList)
+	if this.NeedPlayerDomainWhiteList == 1 {
+		m["playerDomainWhiteList"] = this.PlayerDomainWhiteList
+	}
+
+	return m
+}
+
+func (this SecurityConfig) Method() string {
+	return "POST"
 }

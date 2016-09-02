@@ -1,5 +1,10 @@
 package lecloud
 
+//import (
+//	"testing"
+//	"fmt"
+//)
+
 //func TestGetPushTokenParam(t *testing.T) {
 //	var param = GetPushTokenParam{}
 //	param.ActivityId = "A2016052700000lp"
@@ -19,14 +24,15 @@ package lecloud
 
 //func TestCreateActivityParam(t *testing.T) {
 //	var param = CreateActivityParam{}
-//	param.ActivityName = "直播第一天"
-//	param.StartTime = "20160620150000"
-//	param.EndTime = "20160621130000"
+//	param.ActivityName = "直播第一天2"
+//	param.StartTime = "20160902150000"
+//	param.EndTime = "20160921130000"
 //	param.CodeRateTypes = "10,13"
 //	param.ActivityCategory = "999"
 //
 //	fmt.Println(LiveRequestWithKey("e05b65109e8ecbeec5a61e276ac51592", "835077", param))
 //}
+
 
 //func TestSearchActivityStreamInfo(t *testing.T) {
 //	var param = SearchActivityStreamInfo{}
