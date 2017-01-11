@@ -1,9 +1,9 @@
 package lecloud
 
-//import (
-//	"testing"
-//	"fmt"
-//)
+import (
+	"testing"
+	"fmt"
+)
 
 //func TestGetPushTokenParam(t *testing.T) {
 //	var param = GetPushTokenParam{}
@@ -22,16 +22,16 @@ package lecloud
 //	fmt.Println(LiveRequestWithKey("e05b65109e8ecbeec5a61e276ac51592", "835077", param))
 //}
 
-//func TestCreateActivityParam(t *testing.T) {
-//	var param = CreateActivityParam{}
-//	param.ActivityName = "直播第一天2"
-//	param.StartTime = "20160902150000"
-//	param.EndTime = "20160921130000"
-//	param.CodeRateTypes = "10,13"
-//	param.ActivityCategory = "999"
-//
-//	fmt.Println(LiveRequestWithKey("e05b65109e8ecbeec5a61e276ac51592", "835077", param))
-//}
+func TestCreateActivityParam(t *testing.T) {
+	var param = CreateActivityParam{}
+	param.ActivityName = "直播第一天2"
+	param.StartTime = "20160902150000"
+	param.EndTime = "20170121130000"
+	param.CodeRateTypes = "10,13"
+	param.ActivityCategory = "999"
+
+	fmt.Println(LiveRequestWithKey("e05b65109e8ecbeec5a61e276ac51592", "835077", param))
+}
 
 
 //func TestSearchActivityStreamInfo(t *testing.T) {

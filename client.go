@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/smartwalle/going/http"
 	"sort"
+	"net/url"
 	"time"
 )
 
@@ -65,21 +66,33 @@ func requestWithKey(secretKey, userUnique, domain string, p map[string]string, p
 		}
 	}
 
-	var c = http.NewClient()
-	c.SetMethod(param.Method())
-	c.SetURLString(domain)
-	c.SetHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
-
+	var pp = url.Values{}
 	var keys []string
 	for key, value := range p {
-		c.SetParam(key, value)
+		pp.Add(key, value)
 		keys = append(keys, key)
 	}
 	sort.Strings(keys)
+	pp.Set("sign", sign(secretKey, keys, p))
 
-	c.SetParam("sign", sign(secretKey, keys, p))
+	result, err = http.JSONRequest(param.Method(), domain, pp)
 
-	result, err = c.DoJsonRequest()
+
+	//var c = http.NewClient()
+	//c.SetMethod(param.Method())
+	//c.SetURLString(domain)
+	//c.SetHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
+	//
+	//var keys []string
+	//for key, value := range p {
+	//	c.SetParam(key, value)
+	//	keys = append(keys, key)
+	//}
+	//sort.Strings(keys)
+	//
+	//c.SetParam("sign", sign(secretKey, keys, p))
+	//
+	//result, err = c.DoJsonRequest()
 	return result, err
 }
 
