@@ -4,7 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
-	"github.com/smartwalle/going/http"
+	"github.com/smartwalle/going/request"
 	"sort"
 	"net/url"
 	"time"
@@ -75,7 +75,7 @@ func requestWithKey(secretKey, userUnique, domain string, p map[string]string, p
 	sort.Strings(keys)
 	pp.Set("sign", sign(secretKey, keys, p))
 
-	result, err = http.JSONRequest(param.Method(), domain, pp)
+	result, err = request.JSONRequest(param.Method(), domain, pp)
 	return result, err
 }
 
