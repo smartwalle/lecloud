@@ -75,7 +75,13 @@ func requestWithKey(secretKey, userUnique, domain string, p map[string]string, p
 	sort.Strings(keys)
 	pp.Set("sign", sign(secretKey, keys, p))
 
-	result, err = request.JSONRequest(param.Method(), domain, pp)
+	var req = request.NewRequest(param.Method(), domain)
+	req.SetParams(pp)
+
+	var rep = req.Exec()
+	rep.UnmarshalJSON(&result)
+
+	//result, err = request.JSONRequest(param.Method(), domain, pp)
 	return result, err
 }
 
