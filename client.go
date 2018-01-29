@@ -7,7 +7,7 @@ import (
 	"sort"
 	"net/url"
 	"time"
-	"github.com/smartwalle/nox"
+	"github.com/smartwalle/ngx"
 )
 
 const (
@@ -75,7 +75,7 @@ func requestWithKey(secretKey, userUnique, domain string, p map[string]string, p
 	sort.Strings(keys)
 	pp.Set("sign", sign(secretKey, keys, p))
 
-	var req = nox.NewRequest(param.Method(), domain)
+	var req = ngx.NewRequest(param.Method(), domain)
 	req.SetParams(pp)
 
 	var rep = req.Exec()
